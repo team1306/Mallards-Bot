@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,30 +22,15 @@ import frc.robot.Constants.ShooterConstants;
 
 /** Class to run the rollers over CAN */
 public class Shooter extends SubsystemBase {
-  private final SparkMax shooterMotor1;
-  private final SparkMax shooterMotor2;
+  private final TalonFX shooterMotor1;
+  private final TalonFX shooterMotor2;
 
   public Shooter() {
     // Set up the roller motor as a brushed motor
-    shooterMotor1 = new SparkMax(ShooterConstants.SHOOTER_MOTOR_ID_1, MotorType.kBrushed);
-    shooterMotor2 = new SparkMax(ShooterConstants.SHOOTER_MOTOR_ID_2, MotorType.kBrushed);
-    // Set can timeout. Because this project only sets parameters once on
-    // construction, the timeout can be long without blocking robot operation. Code
-    // which sets or gets parameters during operation may need a shorter timeout.
-    shooterMotor1.setCANTimeout(250);
-    shooterMotor2.setCANTimeout(250);
+    shooterMotor1 = new TalonFX(ShooterConstants.SHOOTER_MOTOR_ID_1);
+    shooterMotor2 = new TalonFX(ShooterConstants.SHOOTER_MOTOR_ID_2);
 
-    // Create and apply configuration for roller motor. Voltage compensation helps
-    // the roller behave the same as the battery
-    // voltage dips. The current limit helps prevent breaker trips or burning out
-    // the motor in the event the roller stalls.
-    SparkMaxConfig shooterConfig = new SparkMaxConfig();
-    shooterConfig.voltageCompensation(ShooterConstants.SHOOTER_MOTOR_VOLTAGE_COMP);
-    shooterConfig.smartCurrentLimit(ShooterConstants.SHOOTER_MOTOR_CURRENT_LIMIT);
-    shooterMotor1.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-    shooterConfig.follow(shooterMotor1.getDeviceId());
-    shooterMotor2.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    shooterMotor2.setControl(new Follower(shooterMotor1.getDeviceID(), false));
   }
 
   @Override
