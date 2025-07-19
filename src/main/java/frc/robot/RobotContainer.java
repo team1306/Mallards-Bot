@@ -5,12 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.*;
+
+import java.util.function.DoubleSupplier;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -24,6 +28,8 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveTrain driveSubsystem = new DriveTrain();
   private final Shooter shooter = new Shooter();
+
+  private DoubleSupplier shooterSpeed = () -> SmartDashboard.getNumber("Shooter Speed", 0.3);
 
   // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(
@@ -69,7 +75,7 @@ public class RobotContainer {
     // Set the default command for the roller subsystem to the command from the
     // factory with the values provided by the triggers on the operator controller
 
-    driverController.a().whileTrue(shooter.runShooter(shooter, () -> 1));
+    driverController.a().toggleOnTrue(shooter.runShooter(shooter, shooterSpeed));
   }
 
   /**
