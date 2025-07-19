@@ -18,16 +18,18 @@ import frc.robot.Constants.ShooterConstants;
 
 /** Class to run the rollers over CAN */
 public class Shooter extends SubsystemBase {
-  private final SparkMax shooterMotor;
+  private final SparkMax shooterMotor1;
+  private final SparkMax shooterMotor2;
 
   public Shooter() {
     // Set up the roller motor as a brushed motor
-    shooterMotor = new SparkMax(ShooterConstants.SHOOTER_MOTOR_ID, MotorType.kBrushed);
-
+    shooterMotor1 = new SparkMax(ShooterConstants.SHOOTER_MOTOR_ID_1, MotorType.kBrushed);
+    shooterMotor2 = new SparkMax(ShooterConstants.SHOOTER_MOTOR_ID_2, MotorType.kBrushed);
     // Set can timeout. Because this project only sets parameters once on
     // construction, the timeout can be long without blocking robot operation. Code
     // which sets or gets parameters during operation may need a shorter timeout.
-    shooterMotor.setCANTimeout(250);
+    shooterMotor1.setCANTimeout(250);
+    shooterMotor2.setCANTimeout(250);
 
     // Create and apply configuration for roller motor. Voltage compensation helps
     // the roller behave the same as the battery
@@ -36,7 +38,10 @@ public class Shooter extends SubsystemBase {
     SparkMaxConfig shooterConfig = new SparkMaxConfig();
     shooterConfig.voltageCompensation(ShooterConstants.SHOOTER_MOTOR_VOLTAGE_COMP);
     shooterConfig.smartCurrentLimit(ShooterConstants.SHOOTER_MOTOR_CURRENT_LIMIT);
-    shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    shooterMotor1.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    shooterConfig.follow(shooterMotor1.getDeviceId());
+    shooterMotor2.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
@@ -46,7 +51,7 @@ public class Shooter extends SubsystemBase {
   // Command to run the roller with joystick inputs
   public Command runShooter(Shooter shooter, DoubleSupplier speed) {
     return Commands.run(
-        () -> shooterMotor.set(speed.getAsDouble()), shooter);
+        () -> shooterMotor1.set(speed.getAsDouble()), shooter);
   }
 
 }

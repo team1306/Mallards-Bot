@@ -27,7 +27,8 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int SHOOTER_MOTOR_ID = 5;
+    public static final int SHOOTER_MOTOR_ID_1 = 5;
+    public static final int SHOOTER_MOTOR_ID_2 = 6;
     public static final int SHOOTER_MOTOR_CURRENT_LIMIT = 60;
     public static final double SHOOTER_MOTOR_VOLTAGE_COMP = 10;
     public static final double ROLLER_EJECT_VALUE = 0.44;
