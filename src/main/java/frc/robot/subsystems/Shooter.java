@@ -31,6 +31,7 @@ public class Shooter extends SubsystemBase {
     shooterMotor2 = new TalonFX(ShooterConstants.SHOOTER_MOTOR_ID_2);
 
     shooterMotor2.setControl(new Follower(shooterMotor1.getDeviceID(), false));
+
   }
 
   @Override
