@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -32,6 +33,15 @@ public class Shooter extends SubsystemBase {
 
     shooterMotor2.setControl(new Follower(shooterMotor1.getDeviceID(), false));
 
+    TalonFXConfiguration config = new TalonFXConfiguration();
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+    config.CurrentLimits.SupplyCurrentLimit = 80;
+    config.CurrentLimits.StatorCurrentLimit = 80;
+    config.CurrentLimits.StatorCurrentLimitEnable = true;
+
+    shooterMotor1.getConfigurator().apply(config.CurrentLimits);
+    shooterMotor2.getConfigurator().apply(config.CurrentLimits);
+
   }
 
   @Override
@@ -41,7 +51,7 @@ public class Shooter extends SubsystemBase {
   // Command to run the roller with joystick inputs
   public Command runShooter(Shooter shooter, DoubleSupplier speed) {
     return Commands.run(
-        () -> shooterMotor1.set(speed.getAsDouble()), shooter);
+        () -> shooterMotor1.set(-speed.getAsDouble()), shooter);
   }
 
 }
