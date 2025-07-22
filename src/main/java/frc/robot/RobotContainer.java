@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.*;
 
 import java.util.function.DoubleSupplier;
@@ -76,7 +76,7 @@ public class RobotContainer {
     // Set the default command for the roller subsystem to the command from the
     // factory with the values provided by the triggers on the operator controller
 
-    driverController.a().toggleOnTrue(shooter.runShooter(shooter, shooterSpeed));
+    driverController.a().toggleOnTrue(new RunShooter(shooter, shooterSpeed));
   }
 
   /**

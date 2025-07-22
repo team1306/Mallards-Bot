@@ -4,27 +4,18 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import java.util.function.DoubleSupplier;
-
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import frc.robot.Constants.ShooterConstants;
 
 /** Class to run the rollers over CAN */
 public class Shooter extends SubsystemBase {
   private final TalonFX shooterMotor1;
   private final TalonFX shooterMotor2;
+
+  private double shooterSpeed;
 
   public Shooter() {
     // Set up the roller motor as a brushed motor
@@ -46,12 +37,11 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    shooterMotor1.set(shooterSpeed);
   }
 
-  // Command to run the roller with joystick inputs
-  public Command runShooter(Shooter shooter, DoubleSupplier speed) {
-    return Commands.run(
-        () -> shooterMotor1.set(-speed.getAsDouble()), shooter);
+  public void setSpeed(double speed) {
+    this.shooterSpeed = speed;
   }
 
 }
