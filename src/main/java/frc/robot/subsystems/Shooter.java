@@ -28,9 +28,9 @@ public class Shooter extends SubsystemBase {
 
     TalonFXConfiguration config = new TalonFXConfiguration();
     config.CurrentLimits.SupplyCurrentLimitEnable = true;
-    config.CurrentLimits.SupplyCurrentLimit = 80;
-    config.CurrentLimits.StatorCurrentLimit = 120;
-    config.CurrentLimits.SupplyCurrentLowerLimit = 80;
+    config.CurrentLimits.SupplyCurrentLimit = 60;
+    config.CurrentLimits.StatorCurrentLimit = 60;
+    config.CurrentLimits.SupplyCurrentLowerLimit = 60;
     config.CurrentLimits.StatorCurrentLimitEnable = true;
 
     shooterMotor1.getConfigurator().apply(config.CurrentLimits);
