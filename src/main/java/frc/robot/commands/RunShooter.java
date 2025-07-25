@@ -17,7 +17,7 @@ public class RunShooter extends Command {
 
     @Override
     public void initialize() {
-        shooter.setSpeed(speed.getAsDouble());
+        shooter.setSpeed(-speed.getAsDouble());
     }
 
     @Override

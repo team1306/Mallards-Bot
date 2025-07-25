@@ -29,7 +29,7 @@ public class RobotContainer {
   private final DriveTrain driveSubsystem = new DriveTrain();
   private final Shooter shooter = new Shooter();
 
-  private DoubleSupplier shooterSpeed = () -> SmartDashboard.getNumber("Shooter Speed", 0.3);
+  private DoubleSupplier shooterSpeed = () -> SmartDashboard.getNumber("Shooter Speed", 1);
 
   // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(

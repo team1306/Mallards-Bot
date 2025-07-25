@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
@@ -27,11 +29,15 @@ public class Shooter extends SubsystemBase {
     TalonFXConfiguration config = new TalonFXConfiguration();
     config.CurrentLimits.SupplyCurrentLimitEnable = true;
     config.CurrentLimits.SupplyCurrentLimit = 80;
-    config.CurrentLimits.StatorCurrentLimit = 80;
+    config.CurrentLimits.StatorCurrentLimit = 120;
+    config.CurrentLimits.SupplyCurrentLowerLimit = 80;
     config.CurrentLimits.StatorCurrentLimitEnable = true;
 
     shooterMotor1.getConfigurator().apply(config.CurrentLimits);
     shooterMotor2.getConfigurator().apply(config.CurrentLimits);
+    
+    shooterMotor1.setNeutralMode(NeutralModeValue.Coast);
+    shooterMotor2.setNeutralMode(NeutralModeValue.Coast);
 
   }
 
