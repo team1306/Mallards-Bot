@@ -34,6 +34,10 @@ public final class Constants {
     public static final double ROLLER_EJECT_VALUE = 0.44;
   }
 
+  public static final class IndexerConstants {
+    public static final int INDEXER_MOTOR_ID = 7;
+  }
+
   public static final class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
   }
